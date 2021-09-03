@@ -241,10 +241,10 @@ def main():
                 outputs_1, outputs_2, outputs_3 = c_gan.psm_outputs0, c_gan.psm_outputs1, c_gan.psm_outputs2
                 
                 disp_ests = [outputs_1, outputs_2, outputs_3]
-                image_outputs = {"imgSim": simsample['left'], "imgReal_L": realsample['left'], "imgReal_R": realsample['right'], "Dis_gt": realsample['disparity'], \
+                image_outputs = {"imgSim": simsample['left'], "imgReal_L": realsample['left'], "imgReal_R": realsample['right'], "Dis_gt": real_gt, \
                             "Dis_est": disp_ests, "feature_sim": feature_outputs_sim, "feature_real": feature_outputs_real, "feature_fake_sim": feature_fake_sim}
 
-                image_outputs["errormap"] = [disp_error_image_func.apply(disp_est, real_gt) for disp_est in disp_ests]
+                image_outputs["errormap"] = [disp_error_image_func.apply(disp_est, realsample['disparity']) for disp_est in disp_ests]
 
                 scalar_outputs = {"loss_G": c_gan.loss_G, "loss_D_A": c_gan.loss_D_A, "loss_D_B": c_gan.loss_D_B, "loss_G_A": (c_gan.loss_G_A_L + c_gan.loss_G_A_R) * 0.5, \
                                 "loss_G_B": (c_gan.loss_G_B_L + c_gan.loss_G_B_R) * 0.5}
