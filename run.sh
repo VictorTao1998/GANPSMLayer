@@ -1,7 +1,7 @@
 #!/bin/bash
 export PYTHONWARNINGS="ignore"
 
-python /cephfs/jianyu/GANPSMNet/gantrain.py \
+python /cephfs/jianyu/GANPSMNetS/gantrain.py \
     --datapath /cephfs/datasets/iccv_pnp/messy-table-dataset/v9/training \
     --trainlist /cephfs/datasets/iccv_pnp/messy-table-dataset/v9/training_lists/all_train.txt \
     --test_datapath /cephfs/datasets/iccv_pnp/messy-table-dataset/v9/training \

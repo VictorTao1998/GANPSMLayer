@@ -140,10 +140,10 @@ class CycleGANModel(BaseModel):
 
         #self.psm.module.set_gan_train(self.fake_B_L, self.fake_B_R)
 
-        #self.psm_outputs = self.psm(self.fake_B_L, self.fake_B_R)
-        #self.psm_outputs0 = torch.squeeze(self.psm_outputs[0],1)
-        #self.psm_outputs1 = torch.squeeze(self.psm_outputs[1],1)
-        #self.psm_outputs2 = torch.squeeze(self.psm_outputs[2],1)
+        self.psm_outputs = self.psm(self.fake_B_L, self.fake_B_R)
+        self.psm_outputs0 = torch.squeeze(self.psm_outputs[0],1)
+        self.psm_outputs1 = torch.squeeze(self.psm_outputs[1],1)
+        self.psm_outputs2 = torch.squeeze(self.psm_outputs[2],1)
 
 
     def backward_D_basic(self, netD, real, fake):
