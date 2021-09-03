@@ -243,8 +243,8 @@ def main():
                 disp_ests = [outputs_1, outputs_2, outputs_3]
                 image_outputs = {"imgSim": simsample['left'], "imgReal_L": realsample['left'], "imgReal_R": realsample['right'], "Dis_gt": real_gt, \
                             "Dis_est": disp_ests, "feature_sim": feature_outputs_sim, "feature_real": feature_outputs_real, "feature_fake_sim": feature_fake_sim}
-
-                image_outputs["errormap"] = [disp_error_image_func.apply(disp_est, realsample['disparity']) for disp_est in disp_ests]
+                real_gt = real_gt.reshape((args.cbatch_size,args.crop_height,args.crop_width))
+                image_outputs["errormap"] = [disp_error_image_func.apply(disp_est, real_gt) for disp_est in disp_ests]
 
                 scalar_outputs = {"loss_G": c_gan.loss_G, "loss_D_A": c_gan.loss_D_A, "loss_D_B": c_gan.loss_D_B, "loss_G_A": (c_gan.loss_G_A_L + c_gan.loss_G_A_R) * 0.5, \
                                 "loss_G_B": (c_gan.loss_G_B_L + c_gan.loss_G_B_R) * 0.5}
