@@ -103,8 +103,8 @@ class CycleGANModel(BaseModel):
             self.optimizers.append(self.optimizer_G)
             self.optimizers.append(self.optimizer_D)
 
-            self.optimizer_psm = torch.optim.Adam(self.psm.parameters(), lr=opt.clr, betas=(0.9, 0.999))
-            self.optimizers.append(self.optimizer_psm)
+            #self.optimizer_psm = torch.optim.Adam(self.psm.parameters(), lr=opt.clr, betas=(0.9, 0.999))
+            #self.optimizers.append(self.optimizer_psm)
 
     def set_input(self, simfeaL, simfeaR, realfeaL, realfeaR, real_gt):
         """Unpack input data from the dataloader and perform necessary pre-processing steps.
@@ -138,7 +138,7 @@ class CycleGANModel(BaseModel):
         self.fake_A_R = self.netG_B(self.sim_A_R)  # G_B(B)
         self.rec_B_R = self.netG_A(self.fake_A_R)   # G_A(G_B(B))
 
-        #self.psm.module.set_gan_train(self.fake_B_L, self.fake_B_R)
+        self.psm.module.set_gan_train(self.fake_B_L, self.fake_B_R)
 
         self.psm_outputs = self.psm(self.fake_B_L, self.fake_B_R)
         self.psm_outputs0 = torch.squeeze(self.psm_outputs[0],1)
