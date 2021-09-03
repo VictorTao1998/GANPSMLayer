@@ -234,15 +234,14 @@ class CycleGANModel(BaseModel):
         # Backward cycle loss || G_A(G_B(B)) - B||
         self.loss_cycle_B_R = self.criterionCycle(self.rec_B_R, self.sim_A_R) * lambda_B
 
-        self.loss_psm = 0.5*F.smooth_l1_loss(self.psm_outputs[0][self.mask], self.real_gt[self.mask], size_average=True) + \
-                    0.7*F.smooth_l1_loss(self.psm_outputs[1][self.mask], self.real_gt[self.mask], size_average=True) + \
-                    F.smooth_l1_loss(self.psm_outputs[2][self.mask], self.real_gt[self.mask], size_average=True)
+        #self.loss_psm = 0.5*F.smooth_l1_loss(self.psm_outputs[0][self.mask], self.real_gt[self.mask], size_average=True) + \
+        #            0.7*F.smooth_l1_loss(self.psm_outputs[1][self.mask], self.real_gt[self.mask], size_average=True) + \
+        #            F.smooth_l1_loss(self.psm_outputs[2][self.mask], self.real_gt[self.mask], size_average=True)
 
         # combined loss and calculate gradients
         self.loss_G = (self.loss_G_A_L + self.loss_G_B_L + self.loss_G_A_R + self.loss_G_B_R) * 0.5 + \
                         (self.loss_cycle_A_L + self.loss_cycle_B_L + self.loss_cycle_A_R + self.loss_cycle_B_R) * 0.5 + \
-                        (self.loss_idt_A_L + self.loss_idt_B_L + self.loss_idt_A_R + self.loss_idt_B_R) * 0.5 + \
-                        self.loss_psm
+                        (self.loss_idt_A_L + self.loss_idt_B_L + self.loss_idt_A_R + self.loss_idt_B_R) * 0.5
         self.loss_G.backward()
 
     def optimize_parameters(self):
