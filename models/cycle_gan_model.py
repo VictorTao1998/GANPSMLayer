@@ -77,7 +77,11 @@ class CycleGANModel(BaseModel):
                                         not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids)
 
         self.psm = model
+        self.psm_o = model
+        self.psm_o.eval()
         self.psm.train()
+        self.psm.module.feature_extraction.gan_train = True
+        self.psm_o.module.feature_extraction.gan_train = True
         self.opt = opt
 
         #self.dummy_input = torch.zeros([1,3,256,512])
@@ -144,6 +148,9 @@ class CycleGANModel(BaseModel):
         self.psm_outputs0 = torch.squeeze(self.psm_outputs[0],1)
         self.psm_outputs1 = torch.squeeze(self.psm_outputs[1],1)
         self.psm_outputs2 = torch.squeeze(self.psm_outputs[2],1)
+
+        self.psm_original = self.psm_o(self.real_A_L, self.real_A_R)
+        self.psm_originals2 = torch.squeeze(self.psm_original[2],1)
 
 
     def backward_D_basic(self, netD, real, fake):
