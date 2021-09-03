@@ -243,8 +243,8 @@ def main():
                 disp_ests = [outputs_1, outputs_2, outputs_3]
                 image_outputs = {"imgSim": simsample['left'], "imgReal_L": realsample['left'], "imgReal_R": realsample['right'], "Dis_gt": real_gt, \
                             "Dis_est": disp_ests, "feature_sim": feature_outputs_sim, "feature_real": feature_outputs_real, "feature_fake_sim": feature_fake_sim}
-                #real_gt = real_gt.reshape((args.cbatch_size,args.crop_height,args.crop_width))
-                #image_outputs["errormap"] = [disp_error_image_func.apply(disp_est, real_gt) for disp_est in disp_ests]
+
+                image_outputs["errormap"] = [disp_error_image_func.apply(disp_est, real_gt) for disp_est in disp_ests]
 
                 scalar_outputs = {"loss_G": c_gan.loss_G, "loss_D_A": c_gan.loss_D_A, "loss_D_B": c_gan.loss_D_B, "loss_G_A": (c_gan.loss_G_A_L + c_gan.loss_G_A_R) * 0.5, \
                                 "loss_G_B": (c_gan.loss_G_B_L + c_gan.loss_G_B_R) * 0.5}
@@ -252,8 +252,6 @@ def main():
 
                 save_scalars(logger, 'train', scalar_outputs, global_step)
                 save_images(logger, 'train', image_outputs, global_step)
-
-                del scalar_outputs, image_outputs
 
         # saving checkpoints
         if (epoch_idx + 1) % args.save_freq == 0:
