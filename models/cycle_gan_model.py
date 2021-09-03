@@ -78,6 +78,7 @@ class CycleGANModel(BaseModel):
 
         self.psm = model
         self.psm.train()
+        self.psm.module.feature_extraction.gan_train = True
         self.opt = opt
 
         #self.dummy_input = torch.zeros([1,3,256,512])
@@ -138,7 +139,7 @@ class CycleGANModel(BaseModel):
         self.fake_A_R = self.netG_B(self.sim_A_R)  # G_B(B)
         self.rec_B_R = self.netG_A(self.fake_A_R)   # G_A(G_B(B))
 
-        self.psm.module.set_gan_train(self.fake_B_L, self.fake_B_R)
+        #self.psm.module.set_gan_train(self.fake_B_L, self.fake_B_R)
 
         self.psm_outputs = self.psm(self.fake_B_L, self.fake_B_R)
         self.psm_outputs0 = torch.squeeze(self.psm_outputs[0],1)
