@@ -45,7 +45,7 @@ class CycleGANModel(BaseModel):
 
         return parser
 
-    def __init__(self, opt, model):
+    def __init__(self, opt):
         """Initialize the CycleGAN class.
 
         Parameters:
@@ -76,12 +76,12 @@ class CycleGANModel(BaseModel):
         self.netG_B = networks.define_G(opt.output_nc, opt.input_nc, opt.ngf, opt.netG, opt.norm,
                                         not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids)
 
-        self.psm = model
-        self.psm_o = model
-        self.psm_o.eval()
-        self.psm.train()
-        self.psm.module.feature_extraction.gan_train = True
-        self.psm_o.module.feature_extraction.gan_train = True
+        #self.psm = model
+        #self.psm_o = model
+        #self.psm_o.eval()
+        #self.psm.train()
+        #self.psm.module.feature_extraction.gan_train = True
+        #self.psm_o.module.feature_extraction.gan_train = True
         self.opt = opt
 
         #self.dummy_input = torch.zeros([1,3,256,512])
@@ -107,8 +107,8 @@ class CycleGANModel(BaseModel):
             self.optimizers.append(self.optimizer_G)
             self.optimizers.append(self.optimizer_D)
 
-            self.optimizer_psm = torch.optim.Adam(self.psm.parameters(), lr=opt.clr, betas=(0.9, 0.999))
-            self.optimizers.append(self.optimizer_psm)
+            #self.optimizer_psm = torch.optim.Adam(self.psm.parameters(), lr=opt.clr, betas=(0.9, 0.999))
+            #self.optimizers.append(self.optimizer_psm)
 
     def set_input(self, simfeaL, simfeaR, realfeaL, realfeaR, real_gt):
         """Unpack input data from the dataloader and perform necessary pre-processing steps.
@@ -144,13 +144,13 @@ class CycleGANModel(BaseModel):
 
         #self.psm.module.set_gan_train(self.fake_B_L, self.fake_B_R)
 
-        self.psm_outputs = self.psm(self.fake_B_L, self.fake_B_R)
-        self.psm_outputs0 = torch.squeeze(self.psm_outputs[0],1)
-        self.psm_outputs1 = torch.squeeze(self.psm_outputs[1],1)
-        self.psm_outputs2 = torch.squeeze(self.psm_outputs[2],1)
+        #self.psm_outputs = self.psm(self.fake_B_L, self.fake_B_R)
+        #self.psm_outputs0 = torch.squeeze(self.psm_outputs[0],1)
+        #self.psm_outputs1 = torch.squeeze(self.psm_outputs[1],1)
+        #self.psm_outputs2 = torch.squeeze(self.psm_outputs[2],1)
 
-        self.psm_original = self.psm_o(self.real_A_L, self.real_A_R)
-        self.psm_originals2 = torch.squeeze(self.psm_original[2],1)
+        #self.psm_original = self.psm_o(self.real_A_L, self.real_A_R)
+        #self.psm_originals2 = torch.squeeze(self.psm_original[2],1)
 
 
     def backward_D_basic(self, netD, real, fake):
@@ -241,15 +241,14 @@ class CycleGANModel(BaseModel):
         # Backward cycle loss || G_A(G_B(B)) - B||
         self.loss_cycle_B_R = self.criterionCycle(self.rec_B_R, self.sim_A_R) * lambda_B
 
-        self.loss_psm = 0.5*F.smooth_l1_loss(self.psm_outputs[0][self.mask], self.real_gt[self.mask], size_average=True) + \
-                    0.7*F.smooth_l1_loss(self.psm_outputs[1][self.mask], self.real_gt[self.mask], size_average=True) + \
-                    F.smooth_l1_loss(self.psm_outputs[2][self.mask], self.real_gt[self.mask], size_average=True)
+        #self.loss_psm = 0.5*F.smooth_l1_loss(self.psm_outputs[0][self.mask], self.real_gt[self.mask], size_average=True) + \
+        #            0.7*F.smooth_l1_loss(self.psm_outputs[1][self.mask], self.real_gt[self.mask], size_average=True) + \
+        #            F.smooth_l1_loss(self.psm_outputs[2][self.mask], self.real_gt[self.mask], size_average=True)
 
         # combined loss and calculate gradients
         self.loss_G = (self.loss_G_A_L + self.loss_G_B_L + self.loss_G_A_R + self.loss_G_B_R) * 0.5 + \
                         (self.loss_cycle_A_L + self.loss_cycle_B_L + self.loss_cycle_A_R + self.loss_cycle_B_R) * 0.5 + \
-                        (self.loss_idt_A_L + self.loss_idt_B_L + self.loss_idt_A_R + self.loss_idt_B_R) * 0.5 + \
-                        self.loss_psm
+                        (self.loss_idt_A_L + self.loss_idt_B_L + self.loss_idt_A_R + self.loss_idt_B_R) * 0.5
         self.loss_G.backward()
 
     def optimize_parameters(self):
@@ -259,10 +258,10 @@ class CycleGANModel(BaseModel):
         # G_A and G_B
         self.set_requires_grad([self.netD_A, self.netD_B], False)  # Ds require no gradients when optimizing Gs
         self.optimizer_G.zero_grad()  # set G_A and G_B's gradients to zero
-        self.optimizer_psm.zero_grad()
+        #self.optimizer_psm.zero_grad()
         self.backward_G()             # calculate gradients for G_A and G_B
         self.optimizer_G.step()       # update G_A and G_B's weights
-        self.optimizer_psm.step()
+        #self.optimizer_psm.step()
         # D_A and D_B
         self.set_requires_grad([self.netD_A, self.netD_B], True)
         self.optimizer_D.zero_grad()   # set D_A and D_B's gradients to zero
