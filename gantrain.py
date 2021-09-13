@@ -187,11 +187,11 @@ opt.checkpoints_dir = args.logdir
 
 
 
-#optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
+optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
 
 model.module.feature_extraction.gan_train = True
 
-c_gan = create_model(opt)
+c_gan = create_model(opt, model)
 c_gan.setup(opt)
 
 start_epoch = 0
@@ -201,7 +201,6 @@ def main():
     Cur_D1 = 1
     #model.set_gan_train()
     feaex.eval()
-    model.eval()
     for epoch_idx in range(start_epoch, args.epochs):
         #adjust_learning_rate(optimizer, epoch_idx, args.lr, args.lrepochs)
         c_gan.update_learning_rate()
@@ -229,9 +228,6 @@ def main():
             c_gan.set_input(simfeaL.detach(), simfeaR.detach(), realfeaL.detach(), realfeaR.detach(), real_gt)         # unpack data from dataset and apply preprocessing
             c_gan.optimize_parameters()
 
-            original_output = model(realsample['left'].cuda(), realsample['right'].cuda())
-
-
             
 
             if batch_idx % 50 == 0:
@@ -242,12 +238,13 @@ def main():
 
                 feature_fake_sim = [fakeSim[:,i,:,:] for i in range(3)]
 
-                #outputs_1, outputs_2, outputs_3 = c_gan.psm_outputs0, c_gan.psm_outputs1, c_gan.psm_outputs2
+                outputs_1, outputs_2, outputs_3 = c_gan.psm_outputs0, c_gan.psm_outputs1, c_gan.psm_outputs2
 
-                outputs_ori = original_output
+                outputs_ori = c_gan.psm_originals2
                 
-                #disp_ests = [outputs_1, outputs_2, outputs_3]
-                image_outputs = {"imgSim": simsample['left'], "imgReal_L": realsample['left'], "imgReal_R": realsample['right'], "Dis_gt": real_gt, "feature_sim": feature_outputs_sim, "feature_real": feature_outputs_real, "feature_fake_sim": feature_fake_sim, "Dis_ori": outputs_ori}
+                disp_ests = [outputs_1, outputs_2, outputs_3]
+                image_outputs = {"imgSim": simsample['left'], "imgReal_L": realsample['left'], "imgReal_R": realsample['right'], "Dis_gt": real_gt, \
+                            "Dis_est": disp_ests, "feature_sim": feature_outputs_sim, "feature_real": feature_outputs_real, "feature_fake_sim": feature_fake_sim, "Dis_ori": outputs_ori}
                 real_gt = real_gt.reshape((args.cbatch_size,args.crop_height,args.crop_width))
                 image_outputs["errormap"] = [disp_error_image_func.apply(disp_est, real_gt) for disp_est in disp_ests]
 

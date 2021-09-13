@@ -20,7 +20,7 @@ python /cephfs/jianyu/GANPSMNetS/gantrain.py \
     --using_ns \
     --ns_size 3 \
     --cmodel stackhourglass \
-    --logdir "/cephfs/jianyu/eval/psm_gan_train_stest"  \
+    --logdir "/cephfs/jianyu/eval/psm_gan_train_S_C"  \
     --cbatch_size 1 \
     --test_batch_size 1 \
     --summary_freq 500 \
