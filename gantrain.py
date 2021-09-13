@@ -148,7 +148,7 @@ else:
     print('no model')
 
 if args.cuda:
-    model = nn.DataParallel(model)
+    #model = nn.DataParallel(model)
     model.cuda()
 
 if args.loadmodel is not None:
@@ -163,7 +163,8 @@ print('Number of model parameters: {}'.format(sum([p.data.nelement() for p in mo
 #discriminator = Discriminator(1, args.feat_map).cuda()
 #discriminator.apply(weights_init)
 
-feaex = model.module.feature_extraction.ganfeature
+#feaex = model.module.feature_extraction.ganfeature
+feaex = model.feature_extraction.ganfeature
 
 opt = TrainOptions().parse()
 
