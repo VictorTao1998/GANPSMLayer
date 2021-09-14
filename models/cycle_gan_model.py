@@ -75,8 +75,8 @@ class CycleGANModel(BaseModel):
                                         not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids)
         self.netG_B = networks.define_G(opt.output_nc, opt.input_nc, opt.ngf, opt.netG, opt.norm,
                                         not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids)
-        print(self.gpu_ids)
-        print(type(self.netG_A))
+        #print(self.gpu_ids)
+        #print(type(self.netG_A))
 
         #self.psm = model
         #self.psm_o = model
