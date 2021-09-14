@@ -156,7 +156,7 @@ if args.loadmodel is not None:
 
 print('Load pretrained model')
 pretrain_dict = torch.load(args.loadmodel)
-print(pretrain_dict['state_dict'].keys())
+#print(pretrain_dict['state_dict'].keys())
 model.load_state_dict(pretrain_dict['state_dict'])
 
 
