@@ -255,6 +255,7 @@ def main():
                 image_outputs = {"imgSim": simsample['left'], "imgReal_L": realsample['left'], "imgReal_R": realsample['right'], "Dis_gt": real_gt, \
                             "feature_sim": feature_outputs_sim, "feature_real": feature_outputs_real, "feature_fake_sim": feature_fake_sim, "Dis_ori": outputs_ori}
                 real_gt = real_gt.reshape((args.cbatch_size,args.crop_height,args.crop_width))
+                print(outputs_ori.shape, real_gt.shape)
                 image_outputs["errormap"] = [disp_error_image_func.apply(outputs_ori, real_gt)]
 
                 scalar_outputs = {"loss_G": c_gan.loss_G, "loss_D_A": c_gan.loss_D_A, "loss_D_B": c_gan.loss_D_B, "loss_G_A": (c_gan.loss_G_A_L + c_gan.loss_G_A_R) * 0.5, \
