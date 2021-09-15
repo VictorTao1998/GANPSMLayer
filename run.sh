@@ -1,7 +1,7 @@
 #!/bin/bash
 export PYTHONWARNINGS="ignore"
 
-python /cephfs/jianyu/GANPSMNetS/gantrain.py \
+python /cephfs/jianyu/GANPSMLayer/gantrain.py \
     --datapath /cephfs/datasets/iccv_pnp/messy-table-dataset/v9/training \
     --trainlist /cephfs/datasets/iccv_pnp/messy-table-dataset/v9/training_lists/all_train.txt \
     --test_datapath /cephfs/datasets/iccv_pnp/messy-table-dataset/v9/training \
@@ -20,7 +20,7 @@ python /cephfs/jianyu/GANPSMNetS/gantrain.py \
     --using_ns \
     --ns_size 3 \
     --cmodel stackhourglass \
-    --logdir "/cephfs/jianyu/eval/psm_gan_train_S_C"  \
+    --logdir "/cephfs/jianyu/eval/psm_gan_train_layer"  \
     --cbatch_size 1 \
     --test_batch_size 1 \
     --summary_freq 500 \
