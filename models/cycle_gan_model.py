@@ -136,7 +136,7 @@ class CycleGANModel(BaseModel):
 
     def forward(self):
         """Run forward pass; called by both functions <optimize_parameters> and <test>."""
-        print(self.real_A_L.shape)
+        #print(self.real_A_L.shape)
         self.fake_B_L = self.netG_A(self.real_A_L)  # G_A(A)
         self.rec_A_L = self.netG_B(self.fake_B_L)   # G_B(G_A(A))
         self.fake_A_L = self.netG_B(self.sim_A_L)  # G_B(B)
