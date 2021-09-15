@@ -254,6 +254,7 @@ class CycleGANModel(BaseModel):
                         (self.loss_cycle_A_L + self.loss_cycle_B_L + self.loss_cycle_A_R + self.loss_cycle_B_R) * 0.5 + \
                         (self.loss_idt_A_L + self.loss_idt_B_L + self.loss_idt_A_R + self.loss_idt_B_R) * 0.5
         self.loss_G.backward()
+        del lambda_idt, lambda_A, lambda_B
 
     def optimize_parameters(self):
         """Calculate losses, gradients, and update network weights; called in every training iteration"""
