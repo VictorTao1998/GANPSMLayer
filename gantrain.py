@@ -239,6 +239,7 @@ def main():
             
       
             if batch_idx % 50 == 0:
+                print("save logs")
                 feature_outputs_sim = [simfeaL[:,i,:,:] for i in range(3)]
                 feature_outputs_real = [realfeaL[:,i,:,:] for i in range(3)]
 
