@@ -175,7 +175,7 @@ class CycleGANModel(BaseModel):
         loss_D_fake = self.criterionGAN(pred_fake, False)
         # Combined loss and calculate gradients
         loss_D = (loss_D_real + loss_D_fake) * 0.5
-        loss_D.backward()
+        #loss_D.backward()
         return loss_D
 
     def backward_D_A(self):
@@ -187,6 +187,7 @@ class CycleGANModel(BaseModel):
         self.loss_D_A_R = self.backward_D_basic(self.netD_A, self.sim_A_R, fake_B_R)
 
         self.loss_D_A = (self.loss_D_A_L + self.loss_D_A_R) * 0.5
+        self.loss_D_A.backward()
 
     def backward_D_B(self):
         """Calculate GAN loss for discriminator D_B"""
@@ -197,6 +198,7 @@ class CycleGANModel(BaseModel):
         self.loss_D_B_R = self.backward_D_basic(self.netD_B, self.real_A_R, fake_A_R)
 
         self.loss_D_B = (self.loss_D_B_L + self.loss_D_B_R) * 0.5
+        self.loss_D_B.backward()
 
     def backward_G(self):
         """Calculate the loss for generators G_A and G_B"""
