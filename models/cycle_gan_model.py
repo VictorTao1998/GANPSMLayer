@@ -123,10 +123,10 @@ class CycleGANModel(BaseModel):
         """
         AtoB = self.opt.direction == 'AtoB'
         #print(simfeaL.shape)
-        self.sim_A_L = simfeaL.to(self.device)[:,1,:,:]#.reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
-        self.sim_A_R = simfeaR.to(self.device)[:,1,:,:]#.reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
-        self.real_A_L = realfeaL.to(self.device)[:,1,:,:]#.reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
-        self.real_A_R = realfeaR.to(self.device)[:,1,:,:]#.reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
+        self.sim_A_L = simfeaL.to(self.device)[:,1,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
+        self.sim_A_R = simfeaR.to(self.device)[:,1,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
+        self.real_A_L = realfeaL.to(self.device)[:,1,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
+        self.real_A_R = realfeaR.to(self.device)[:,1,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
 
         #self.real_gt = real_gt.to(self.device)
 
