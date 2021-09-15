@@ -245,7 +245,7 @@ def main():
 
                 fakeSim = c_gan.fake_B_L
 
-                feature_fake_sim = [fakeSim[:,i,:,:]]
+                feature_fake_sim = [fakeSim]
 
                 #outputs_1, outputs_2, outputs_3 = c_gan.psm_outputs0, c_gan.psm_outputs1, c_gan.psm_outputs2
 
