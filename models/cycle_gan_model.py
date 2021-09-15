@@ -71,7 +71,7 @@ class CycleGANModel(BaseModel):
         # define networks (both Generators and discriminators)
         # The naming is different from those used in the paper.
         # Code (vs. paper): G_A (G), G_B (F), D_A (D_Y), D_B (D_X)
-        print(opt.input_nc, opt.output_nc)
+        #print(opt.input_nc, opt.output_nc)
         self.netG_A = networks.define_G(opt.input_nc, opt.output_nc, opt.ngf, opt.netG, opt.norm,
                                         not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids)
         self.netG_B = networks.define_G(opt.output_nc, opt.input_nc, opt.ngf, opt.netG, opt.norm,
@@ -123,10 +123,10 @@ class CycleGANModel(BaseModel):
         """
         AtoB = self.opt.direction == 'AtoB'
         #print(simfeaL.shape)
-        self.sim_A_L = simfeaL.to(self.device)#[:,1,:,:].reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
-        self.sim_A_R = simfeaR.to(self.device)#[:,1,:,:].reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
-        self.real_A_L = realfeaL.to(self.device)#[:,1,:,:].reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
-        self.real_A_R = realfeaR.to(self.device)#[:,1,:,:].reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
+        self.sim_A_L = simfeaL.to(self.device)[:,1,:,:]#.reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
+        self.sim_A_R = simfeaR.to(self.device)[:,1,:,:]#.reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
+        self.real_A_L = realfeaL.to(self.device)[:,1,:,:]#.reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
+        self.real_A_R = realfeaR.to(self.device)[:,1,:,:]#.reshape((simfeaL.shape[0], simfeaL.shape[2], simfeaL.shape[3]))
 
         #self.real_gt = real_gt.to(self.device)
 
