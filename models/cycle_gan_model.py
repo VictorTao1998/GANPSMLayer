@@ -121,11 +121,11 @@ class CycleGANModel(BaseModel):
         The option 'direction' can be used to swap domain A and domain B.
         """
         AtoB = self.opt.direction == 'AtoB'
-        print(simfeaL.shape)
-        self.sim_A_L = simfeaL.to(self.device)
-        self.sim_A_R = simfeaR.to(self.device)
-        self.real_A_L = realfeaL.to(self.device)
-        self.real_A_R = realfeaR.to(self.device)
+        #print(simfeaL.shape)
+        self.sim_A_L = simfeaL.to(self.device)[:,0,:,:]
+        self.sim_A_R = simfeaR.to(self.device)[:,0,:,:]
+        self.real_A_L = realfeaL.to(self.device)[:,0,:,:]
+        self.real_A_R = realfeaR.to(self.device)[:,0,:,:]
 
         #self.real_gt = real_gt.to(self.device)
 
