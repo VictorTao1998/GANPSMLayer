@@ -240,12 +240,12 @@ def main():
       
             if batch_idx % 50 == 0:
                 #print("save logs")
-                feature_outputs_sim = [simfeaL[:,i,:,:] for i in range(simfeaL.shape[1])]
-                feature_outputs_real = [realfeaL[:,i,:,:] for i in range(realfeaL.shape[1])]
+                feature_outputs_sim = [simfeaL[:,1,:,:]]
+                feature_outputs_real = [realfeaL[:,1,:,:]]
 
                 fakeSim = c_gan.fake_B_L
 
-                feature_fake_sim = [fakeSim[:,i,:,:] for i in range(fakeSim.shape[1])]
+                feature_fake_sim = [fakeSim[:,i,:,:]]
 
                 #outputs_1, outputs_2, outputs_3 = c_gan.psm_outputs0, c_gan.psm_outputs1, c_gan.psm_outputs2
 
