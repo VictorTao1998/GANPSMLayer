@@ -29,6 +29,7 @@ from options.train_options import TrainOptions
 from models.cycle_gan_model import *
 from models import create_model
 from dataloader.warp_ops import apply_disparity_cu
+from collections import OrderedDict
 
 
 cudnn.benchmark = True
@@ -157,7 +158,7 @@ if args.loadmodel is not None:
 print('Load pretrained model')
 pretrain_dict = torch.load(args.loadmodel)
 
-pre_train_dict = pretrain_dict['state_dict']([(k.replace("module.",""), v) for k, v in d.items()])
+pre_train_dict = OrderedDict([(k.replace("module.",""), v) for k, v in pretrain_dict['state_dict'].items()])
 
 model.load_state_dict(pre_train_dict)
 
