@@ -168,7 +168,7 @@ print('Number of model parameters: {}'.format(sum([p.data.nelement() for p in mo
 #discriminator = Discriminator(1, args.feat_map).cuda()
 #discriminator.apply(weights_init)
 
-feaex = model.module.feature_extraction.ganfeature
+feaex = model.feature_extraction.ganfeature
 
 opt = TrainOptions().parse()
 
@@ -194,7 +194,7 @@ opt.checkpoints_dir = args.logdir
 
 #optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
 
-model.module.feature_extraction.gan_train = True
+model.feature_extraction.gan_train = True
 
 c_gan = create_model(opt)
 c_gan.setup(opt)
