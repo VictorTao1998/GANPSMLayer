@@ -122,10 +122,10 @@ class CycleGANModel(BaseModel):
         """
         AtoB = self.opt.direction == 'AtoB'
         #print(simfeaL.shape)
-        self.sim_A_L = simfeaL.to(self.device)
-        self.sim_A_R = simfeaR.to(self.device)
-        self.real_A_L = realfeaL.to(self.device)
-        self.real_A_R = realfeaR.to(self.device)
+        self.sim_A_L = simfeaL.to(self.device)[:,0,:,:]
+        self.sim_A_R = simfeaR.to(self.device)[:,0,:,:]
+        self.real_A_L = realfeaL.to(self.device)[:,0,:,:]
+        self.real_A_R = realfeaR.to(self.device)[:,0,:,:]
 
         #self.real_gt = real_gt.to(self.device)
 
