@@ -264,6 +264,7 @@ def main():
                 save_scalars(logger, 'train', scalar_outputs, global_step)
                 save_images(logger, 'train', image_outputs, global_step)
                 del scalar_outputs, image_outputs, feature_outputs_sim, feature_outputs_real, feature_fake_sim, fakeSim, outputs_ori, real_gt
+            del realsample, global_step, do_summary, simfeaL, simfeaR, sim_gt, realfeaL, realfeaR, real_gt, disp_gt_t, original_output
          
             gc.collect()
 
