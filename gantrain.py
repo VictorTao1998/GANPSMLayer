@@ -262,6 +262,8 @@ def main():
 
                 save_scalars(logger, 'train', scalar_outputs, global_step)
                 save_images(logger, 'train', image_outputs, global_step)
+                del scalar_outputs, image_outputs
+            gc.collect()
 
         # saving checkpoints
         if (epoch_idx + 1) % args.save_freq == 0:
