@@ -237,7 +237,7 @@ def main():
             original_output = model(realsample['left'].cuda(), realsample['right'].cuda())
 
             
-
+            """
             if batch_idx % 50 == 0:
                 feature_outputs_sim = [simfeaL[:,i,:,:] for i in range(3)]
                 feature_outputs_real = [realfeaL[:,i,:,:] for i in range(3)]
@@ -263,6 +263,7 @@ def main():
                 save_scalars(logger, 'train', scalar_outputs, global_step)
                 save_images(logger, 'train', image_outputs, global_step)
                 del scalar_outputs, image_outputs
+            """
             gc.collect()
 
         # saving checkpoints
