@@ -194,7 +194,7 @@ opt.checkpoints_dir = args.logdir
 
 #optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
 
-model.feature_extraction.gan_train = True
+model.feature_extraction.gan_train = False
 
 c_gan = create_model(opt)
 c_gan.setup(opt)
