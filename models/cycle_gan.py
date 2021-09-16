@@ -12,7 +12,7 @@ from utils.image_pool import ImagePool
 
 
 class CycleGANModel:
-    def __init__(self, lambdaA=10.0, lambdaB=10.0, lambda_identity=0.5, isTrain=True):
+    def __init__(self, device, lambdaA=10.0, lambdaB=10.0, lambda_identity=0.5, isTrain=True):
         """
         lambdaA: weight for cycle loss (A -> B -> A)
         lambdaB: weight for cycle loss (B -> A -> B)
@@ -24,6 +24,7 @@ class CycleGANModel:
         self.lambdaB = lambdaB
         self.lambda_identity = lambda_identity
         self.isTrain = isTrain
+        self.device = device
 
         # Define networks for both generators and discriminators
         self.netG_A = define_G(input_nc=1, output_nc=1, ngf=64, netG='resnet_9blocks', norm='instance')

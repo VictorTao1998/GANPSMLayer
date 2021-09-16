@@ -178,7 +178,7 @@ print('Number of model parameters: {}'.format(sum([p.data.nelement() for p in mo
 feaex = model.module.feature_extraction.ganfeature
 model.module.feature_extraction.gan_train = False
 
-c_gan = CycleGANModel()
+c_gan = CycleGANModel(cuda_device)
 c_gan.set_device(cuda_device)
 c_gan.set_distributed(is_distributed=is_distributed, local_rank=args.local_rank)
 
