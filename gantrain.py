@@ -14,6 +14,7 @@ import numpy as np
 import time
 from tensorboardX import SummaryWriter
 from dataloader.messy_dataset import MESSYDataset
+from models.cycle_gan import CycleGANModel
 
 from models import *
 
@@ -26,8 +27,8 @@ from dataloader.warp_ops import *
 
 import torchvision.transforms as transforms
 from options.train_options import TrainOptions
-from models.cycle_gan_model import *
-from models import create_model
+#from models.cycle_gan_model import *
+#from models import create_model
 from dataloader.warp_ops import apply_disparity_cu
 from collections import OrderedDict
 
@@ -149,7 +150,7 @@ else:
     print('no model')
 
 if args.cuda:
-    #model = nn.DataParallel(model)
+    model = nn.DataParallel(model)
     model.cuda()
 
 if args.loadmodel is not None:
@@ -157,10 +158,7 @@ if args.loadmodel is not None:
 
 print('Load pretrained model')
 pretrain_dict = torch.load(args.loadmodel)
-
-pre_train_dict = OrderedDict([(k.replace("module.",""), v) for k, v in pretrain_dict['state_dict'].items()])
-
-model.load_state_dict(pre_train_dict)
+model.load_state_dict(pre_train_dict['state_dict'])
 
 
 print('Number of model parameters: {}'.format(sum([p.data.nelement() for p in model.parameters()])))
@@ -168,36 +166,12 @@ print('Number of model parameters: {}'.format(sum([p.data.nelement() for p in mo
 #discriminator = Discriminator(1, args.feat_map).cuda()
 #discriminator.apply(weights_init)
 
-feaex = model.feature_extraction.ganfeature
+feaex = model.module.feature_extraction.ganfeature
+model.module.feature_extraction.gan_train = False
 
-opt = TrainOptions().parse()
-
-#opt_s1.input_nc = 32
-#opt_s1.output_nc = 32
-
-#opt_s2.input_nc = 16
-#opt_s2.output_nc = 16
-
-#opt_s1.checkpoints_dir = args.logdir
-opt.checkpoints_dir = args.logdir
-
-#print(opt_s1.model, opt_s2.model)
-
-
-#s1_gan  = create_model(opt_s1)      # create a model given opt.model and other options
-#s1_gan.setup(opt_s1)
-
-      # create a model given opt.model and other options
-#s2_gan.setup(opt_s2)
-
-
-
-#optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
-
-model.feature_extraction.gan_train = False
-
-c_gan = create_model(opt)
-c_gan.setup(opt)
+gan_model = CycleGANModel()
+gan_model.set_device(cuda_device)
+gan_model.set_distributed(is_distributed=is_distributed, local_rank=args.local_rank)
 
 start_epoch = 0
 
@@ -231,7 +205,7 @@ def main():
 
             #print("sim_fea: ", simfeaL['stage1'].shape, simfeaL['stage2'].shape)
 
-            c_gan.set_input(simfeaL.detach(), simfeaR.detach(), realfeaL.detach(), realfeaR.detach(), real_gt)         # unpack data from dataset and apply preprocessing
+            c_gan.set_input(simfeaL, simfeaR, realfeaL, realfeaR, real_gt)         # unpack data from dataset and apply preprocessing
             c_gan.optimize_parameters()
 
             original_output = model(realsample['left'].cuda(), realsample['right'].cuda())

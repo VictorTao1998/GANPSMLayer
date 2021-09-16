@@ -210,6 +210,7 @@ class CycleGANModel(BaseModel):
         lambda_idt = self.opt.lambda_identity
         lambda_A = self.opt.lambda_A
         lambda_B = self.opt.lambda_B
+        print(lambda_identity, lambda_A, lambda_B)
         # Identity loss
         if lambda_idt > 0:
             # G_A should be identity if real_B is fed: ||G_A(B) - B||
