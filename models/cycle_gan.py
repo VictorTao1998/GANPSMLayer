@@ -20,9 +20,9 @@ class CycleGANModel:
             of the identity mapping loss. For example, if the weight of the identity loss should be 10 times smaller
             than the weight of the reconstruction loss, please set lambda_identity = 0.1
         """
-        self.lambdaA = lambdaA
-        self.lambdaB = lambdaB
-        self.lambda_identity = lambda_identity
+        self.lambda_A = lambdaA
+        self.lambda_B = lambdaB
+        self.lambda_idt = lambda_identity
         self.isTrain = isTrain
         self.device = device
 
