@@ -91,10 +91,10 @@ class CycleGANModel:
         The option 'direction' can be used to swap domain A and domain B.
         """
         #print(simfeaL.shape)
-        self.sim_A_L = simfeaL.to(self.device)[:,1,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
-        self.sim_A_R = simfeaR.to(self.device)[:,1,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
-        self.real_A_L = realfeaL.to(self.device)[:,1,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
-        self.real_A_R = realfeaR.to(self.device)[:,1,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
+        self.sim_A_L = simfeaL.to(self.device)[:,0,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
+        self.sim_A_R = simfeaR.to(self.device)[:,0,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
+        self.real_A_L = realfeaL.to(self.device)[:,0,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
+        self.real_A_R = realfeaR.to(self.device)[:,0,:,:].reshape((simfeaL.shape[0], 1, simfeaL.shape[2], simfeaL.shape[3]))
 
     def forward(self):
         # fake_B = G_A(A)

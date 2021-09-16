@@ -223,8 +223,8 @@ def main():
       
             if batch_idx % 50 == 0:
                 #print("save logs")
-                feature_outputs_sim = [simfeaL[:,1,:,:]]
-                feature_outputs_real = [realfeaL[:,1,:,:]]
+                feature_outputs_sim = [simfeaL[:,0,:,:]]
+                feature_outputs_real = [realfeaL[:,0,:,:]]
 
                 fakeSim = c_gan.fake_B_L
 
