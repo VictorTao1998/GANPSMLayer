@@ -7,8 +7,8 @@ Reference: https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/m
 import torch
 import itertools
 from .gan_networks import define_G, define_D, GANLoss
-from utils.image_poll import ImagePool
-from utils.test_util import load_from_dataparallel_model
+from utils.image_pool import ImagePool
+#from utils.test_util import load_from_dataparallel_model
 
 
 class CycleGANModel:
