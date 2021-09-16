@@ -110,7 +110,7 @@ class CycleGANModel:
 
     def backward_G(self):
         """Calculate the loss for generators G_A and G_B"""
-        print(self.lambda_identity, self.lambda_A, self.lambda_B)
+        print(self.lambda_idt, self.lambda_A, self.lambda_B)
         # Identity loss
         if lambda_idt > 0:
             # G_A should be identity if real_B is fed: ||G_A(B) - B||
