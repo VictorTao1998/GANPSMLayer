@@ -143,14 +143,14 @@ class CycleGANModel:
         self.loss_G_B_R = self.criterionGAN(self.netD_B(self.fake_A_R), True)
 
         # Forward cycle loss || G_B(G_A(A)) - A||
-        self.loss_cycle_A_L = self.criterionCycle(self.rec_A_L, self.real_A_L) * lambda_A
+        self.loss_cycle_A_L = self.criterionCycle(self.rec_A_L, self.real_A_L) * self.lambda_A
         # Backward cycle loss || G_A(G_B(B)) - B||
-        self.loss_cycle_B_L = self.criterionCycle(self.rec_B_L, self.sim_A_L) * lambda_B
+        self.loss_cycle_B_L = self.criterionCycle(self.rec_B_L, self.sim_A_L) * self.lambda_B
 
         # Forward cycle loss || G_B(G_A(A)) - A||
-        self.loss_cycle_A_R = self.criterionCycle(self.rec_A_R, self.real_A_R) * lambda_A
+        self.loss_cycle_A_R = self.criterionCycle(self.rec_A_R, self.real_A_R) * self.lambda_A
         # Backward cycle loss || G_A(G_B(B)) - B||
-        self.loss_cycle_B_R = self.criterionCycle(self.rec_B_R, self.sim_A_R) * lambda_B
+        self.loss_cycle_B_R = self.criterionCycle(self.rec_B_R, self.sim_A_R) * self.lambda_B
 
         # combined loss and calculate gradients
         self.loss_G = (self.loss_G_A_L + self.loss_G_B_L + self.loss_G_A_R + self.loss_G_B_R) * 0.5 + \
