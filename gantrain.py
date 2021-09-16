@@ -214,7 +214,7 @@ def main():
 
             #print("sim_fea: ", simfeaL['stage1'].shape, simfeaL['stage2'].shape)
 
-            c_gan.set_input(simfeaL, simfeaR, realfeaL, realfeaR, real_gt)         # unpack data from dataset and apply preprocessing
+            c_gan.set_input(simfeaL.detach(), simfeaR.detach(), realfeaL.detach(), realfeaR.detach())         # unpack data from dataset and apply preprocessing
             c_gan.optimize_parameters()
 
             original_output = model(realsample['left'].cuda(), realsample['right'].cuda())

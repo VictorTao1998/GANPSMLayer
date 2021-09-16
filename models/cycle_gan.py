@@ -82,7 +82,7 @@ class CycleGANModel:
                 for param in net.parameters():
                     param.requires_grad = requires_grad
 
-    def set_input(self, simfeaL, simfeaR, realfeaL, realfeaR, real_gt):
+    def set_input(self, simfeaL, simfeaR, realfeaL, realfeaR):
         """Unpack input data from the dataloader and perform necessary pre-processing steps.
 
         Parameters:
@@ -170,7 +170,7 @@ class CycleGANModel:
         We also call loss_D.backward() to calculate the gradients.
         """
         # Real
-        pred_real = netD(real.detach())
+        pred_real = netD(real)
         loss_D_real = self.criterionGAN(pred_real, True)
         # Fake
         pred_fake = netD(fake.detach())
