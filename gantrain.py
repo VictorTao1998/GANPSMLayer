@@ -95,6 +95,15 @@ parser.add_argument('--ground', action='store_true', help='include ground pixel'
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
 
+num_gpus = int(os.environ["WORLD_SIZE"]) if "WORLD_SIZE" in os.environ else 1
+is_distributed = num_gpus > 1
+args.is_distributed = is_distributed
+if is_distributed:
+    torch.cuda.set_device(args.local_rank)
+    torch.distributed.init_process_group( backend="nccl", init_method="env://")
+    synchronize()
+cuda_device = torch.device("cuda:{}".format(args.local_rank))
+
 
 
 # parse arguments
