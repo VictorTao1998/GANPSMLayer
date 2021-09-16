@@ -110,25 +110,22 @@ class CycleGANModel:
 
     def backward_G(self):
         """Calculate the loss for generators G_A and G_B"""
-        lambda_idt = self.opt.lambda_identity
-        lambda_A = self.opt.lambda_A
-        lambda_B = self.opt.lambda_B
-        print(lambda_identity, lambda_A, lambda_B)
+        print(self.lambda_identity, self.lambda_A, self.lambda_B)
         # Identity loss
         if lambda_idt > 0:
             # G_A should be identity if real_B is fed: ||G_A(B) - B||
             self.idt_A_L = self.netG_A(self.sim_A_L)
-            self.loss_idt_A_L = self.criterionIdt(self.idt_A_L, self.sim_A_L) * lambda_B * lambda_idt
+            self.loss_idt_A_L = self.criterionIdt(self.idt_A_L, self.sim_A_L) * self.lambda_B * self.lambda_idt
             # G_B should be identity if real_A is fed: ||G_B(A) - A||
             self.idt_B_L = self.netG_B(self.real_A_L)
-            self.loss_idt_B_L = self.criterionIdt(self.idt_B_L, self.real_A_L) * lambda_A * lambda_idt
+            self.loss_idt_B_L = self.criterionIdt(self.idt_B_L, self.real_A_L) * self.lambda_A * self.lambda_idt
 
             # G_A should be identity if real_B is fed: ||G_A(B) - B||
             self.idt_A_R = self.netG_A(self.sim_A_R)
-            self.loss_idt_A_R = self.criterionIdt(self.idt_A_R, self.sim_A_R) * lambda_B * lambda_idt
+            self.loss_idt_A_R = self.criterionIdt(self.idt_A_R, self.sim_A_R) * self.lambda_B * self.lambda_idt
             # G_B should be identity if real_A is fed: ||G_B(A) - A||
             self.idt_B_R = self.netG_B(self.real_A_R)
-            self.loss_idt_B_R = self.criterionIdt(self.idt_B_R, self.real_A_R) * lambda_A * lambda_idt
+            self.loss_idt_B_R = self.criterionIdt(self.idt_B_R, self.real_A_R) * self.lambda_A * self.lambda_idt
         else:
             self.loss_idt_A_L = 0
             self.loss_idt_B_L = 0
