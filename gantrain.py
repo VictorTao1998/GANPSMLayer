@@ -169,9 +169,9 @@ print('Number of model parameters: {}'.format(sum([p.data.nelement() for p in mo
 feaex = model.module.feature_extraction.ganfeature
 model.module.feature_extraction.gan_train = False
 
-gan_model = CycleGANModel()
-gan_model.set_device(cuda_device)
-gan_model.set_distributed(is_distributed=is_distributed, local_rank=args.local_rank)
+c_gan = CycleGANModel()
+c_gan.set_device(cuda_device)
+c_gan.set_distributed(is_distributed=is_distributed, local_rank=args.local_rank)
 
 start_epoch = 0
 
@@ -183,7 +183,7 @@ def main():
     model.eval()
     for epoch_idx in range(start_epoch, args.epochs):
         #adjust_learning_rate(optimizer, epoch_idx, args.lr, args.lrepochs)
-        c_gan.update_learning_rate()
+        #c_gan.update_learning_rate()
 
         # training
         for batch_idx, simsample in enumerate(TrainImgLoader):
