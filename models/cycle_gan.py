@@ -110,7 +110,7 @@ class CycleGANModel:
 
     def backward_G(self):
         """Calculate the loss for generators G_A and G_B"""
-        print(self.lambda_idt, self.lambda_A, self.lambda_B)
+        #print(self.lambda_idt, self.lambda_A, self.lambda_B)
         # Identity loss
         if self.lambda_idt > 0:
             # G_A should be identity if real_B is fed: ||G_A(B) - B||
@@ -170,7 +170,7 @@ class CycleGANModel:
         We also call loss_D.backward() to calculate the gradients.
         """
         # Real
-        pred_real = netD(real)
+        pred_real = netD(real.detach())
         loss_D_real = self.criterionGAN(pred_real, True)
         # Fake
         pred_fake = netD(fake.detach())
