@@ -158,7 +158,7 @@ if args.loadmodel is not None:
 
 print('Load pretrained model')
 pretrain_dict = torch.load(args.loadmodel)
-model.load_state_dict(pre_train_dict['state_dict'])
+model.load_state_dict(pretrain_dict['state_dict'])
 
 
 print('Number of model parameters: {}'.format(sum([p.data.nelement() for p in model.parameters()])))
