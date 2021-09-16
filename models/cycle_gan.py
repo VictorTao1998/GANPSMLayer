@@ -112,7 +112,7 @@ class CycleGANModel:
         """Calculate the loss for generators G_A and G_B"""
         print(self.lambda_idt, self.lambda_A, self.lambda_B)
         # Identity loss
-        if lambda_idt > 0:
+        if self.lambda_idt > 0:
             # G_A should be identity if real_B is fed: ||G_A(B) - B||
             self.idt_A_L = self.netG_A(self.sim_A_L)
             self.loss_idt_A_L = self.criterionIdt(self.idt_A_L, self.sim_A_L) * self.lambda_B * self.lambda_idt
